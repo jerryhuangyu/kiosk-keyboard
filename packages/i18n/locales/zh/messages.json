@@ -1,0 +1,45 @@
+{
+  "extensionDescription": {
+    "description": "Extension description",
+    "message": "信息亭键盘 - 信息亭模式键盘输入的Chrome扩展"
+  },
+  "extensionName": {
+    "description": "Extension name",
+    "message": "信息亭键盘"
+  },
+  "toggleTheme": {
+    "message": "Toggle theme中"
+  },
+  "injectButton": {
+    "message": "Click to inject Content Scripts中"
+  },
+  "greeting": {
+    "description": "Greeting message中",
+    "message": "Hello, My name is $NAME$中",
+    "placeholders": {
+      "name": {
+        "content": "$1中",
+        "example": "John Doe中"
+      }
+    }
+  },
+  "hello": {
+    "description": "Placeholder example中",
+    "message": "Hello $1中"
+  },
+  "displayErrorInfo": {
+    "message": "Error occur中"
+  },
+  "displayErrorDescription": {
+    "message": "Sorry, something went wrong while loading the page.中"
+  },
+  "displayErrorDetailsInfo": {
+    "message": "Error details:中"
+  },
+  "displayErrorUnknownErrorInfo": {
+    "message": "Unknown error中"
+  },
+  "displayErrorReset": {
+    "message": "Run Again中"
+  }
+}

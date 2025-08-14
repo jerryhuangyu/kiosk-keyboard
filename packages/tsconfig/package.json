@@ -1,0 +1,7 @@
+{
+  "name": "@extension/tsconfig",
+  "version": "0.0.1",
+  "description": "Kiosk Keyboard - tsconfig",
+  "private": true,
+  "sideEffects": false
+}
