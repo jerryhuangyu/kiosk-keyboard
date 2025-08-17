@@ -102,7 +102,7 @@ export const VirtualKeyboard = () => {
         { char: "l", value: "l" },
         { char: ";", value: ";" },
         { char: "'", value: "'" },
-        { char: "Enter", value: "\n", minWidth: "160px" },
+        { char: "Enter", value: "\n", minWidth: "160px", onClick: () => virtualKeyboard.enter() },
       ],
       [
         { char: "z", value: "z" },
@@ -183,7 +183,7 @@ export const VirtualKeyboard = () => {
         { char: "L", value: "L" },
         { char: ";", value: ";" },
         { char: "'", value: "'" },
-        { char: "Enter", value: "\n", minWidth: "160px" },
+        { char: "Enter", value: "\n", minWidth: "160px", onClick: () => virtualKeyboard.enter() },
       ],
       [
         { char: "Z", value: "Z" },

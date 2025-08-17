@@ -1,6 +1,51 @@
 import { virtualKeyboardStorage } from "@extension/storage";
 
 class VirtualKeyboard {
+  public async enter() {
+    const state = await virtualKeyboardStorage.get();
+    let element: HTMLInputElement | HTMLTextAreaElement | null = null;
+
+    // Find the active element by ID
+    if (state.activeElementId) {
+      const foundElement = document.getElementById(state.activeElementId);
+      if (foundElement instanceof HTMLInputElement || foundElement instanceof HTMLTextAreaElement) {
+        element = foundElement;
+      }
+    }
+
+    if (!element) {
+      console.warn("No active element to enter into");
+      return;
+    }
+
+    if (element instanceof HTMLTextAreaElement) {
+      // Insert a newline at the cursor position
+      const value = element.value;
+      const start = element.selectionStart ?? value.length;
+      const end = element.selectionEnd ?? value.length;
+      const newValue = value.slice(0, start) + "\n" + value.slice(end);
+      element.value = newValue;
+      element.focus();
+      element.setSelectionRange(start + 1, start + 1);
+      // Dispatch input event (insertLineBreak)
+      const inputEvent = new InputEvent("input", {
+        bubbles: true,
+        cancelable: true,
+        inputType: "insertLineBreak",
+        data: "\n",
+      });
+      element.dispatchEvent(inputEvent);
+    } else if (element instanceof HTMLInputElement) {
+      // For input elements, blur (simulate submit/exit)
+      element.blur();
+      // Optionally, dispatch a change event
+      const changeEvent = new Event("change", {
+        bubbles: true,
+        cancelable: true,
+      });
+      element.dispatchEvent(changeEvent);
+    }
+  }
   public async backspace() {
     const state = await virtualKeyboardStorage.get();
     let element: HTMLInputElement | HTMLTextAreaElement | null = null;
