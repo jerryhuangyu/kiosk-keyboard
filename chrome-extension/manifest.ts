@@ -34,10 +34,10 @@ const manifest = {
   permissions: ['storage', 'scripting', 'tabs', 'notifications'],
   action: {
     default_popup: 'popup/index.html',
-    default_icon: 'icon-34.png',
+    default_icon: 'logo/favicon-96x96.png',
   },
   icons: {
-    '128': 'icon-128.png',
+    '128': 'logo/web-app-manifest-192x192.png',
   },
   content_scripts: [
     {

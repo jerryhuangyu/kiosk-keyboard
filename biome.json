@@ -1,0 +1,51 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/pages/**/*",
+      "**/packages/**/*",
+      "**/tests/**/*",
+      "**/chrome-extension/**/*",
+      "**/index.html",
+      "**/vite.config.mjs",
+      "!**/chrome-extension/manifest.js",
+      "!**/dist/manifest.js"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "useSortedClasses": {
+          "options": {
+            "attributes": ["classList"],
+            "functions": ["clsx", "cva", "tw", "tw.*"]
+          },
+          "fix": "safe",
+          "level": "warn"
+        }
+      },
+      "correctness": {
+        "useUniqueElementIds": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  }
+}
