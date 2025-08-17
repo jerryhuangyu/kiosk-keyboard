@@ -83,7 +83,12 @@ export const VirtualKeyboard = () => {
         { char: "[", value: "[" },
         { char: "]", value: "]" },
         { char: "\\", value: "\\" },
-        { char: <DeleteIcon className="size-[18px] stroke-[1.5]" />, value: "{", minWidth: "140px" },
+        {
+          char: <DeleteIcon className="size-[18px] stroke-[1.5]" />,
+          value: "",
+          minWidth: "140px",
+          onClick: () => virtualKeyboard.backspace(),
+        },
       ],
       [
         { char: "a", value: "a" },
@@ -159,7 +164,12 @@ export const VirtualKeyboard = () => {
         { char: "[", value: "[" },
         { char: "]", value: "]" },
         { char: "\\", value: "\\" },
-        { char: <DeleteIcon className="size-[18px] stroke-[1.5]" />, value: "", minWidth: "140px" },
+        {
+          char: <DeleteIcon className="size-[18px] stroke-[1.5]" />,
+          value: "",
+          minWidth: "140px",
+          onClick: () => virtualKeyboard.backspace(),
+        },
       ],
       [
         { char: "A", value: "A" },
@@ -258,7 +268,12 @@ export const VirtualKeyboard = () => {
           value: "",
           onClick: () => dispatch({ type: "SWITCH_LANGUAGE", language: Language.English }),
         },
-        { char: <DeleteIcon className="size-[18px] stroke-[1.5]" />, value: "", minWidth: "140px" },
+        {
+          char: <DeleteIcon className="size-[18px] stroke-[1.5]" />,
+          value: "",
+          minWidth: "140px",
+          onClick: () => virtualKeyboard.backspace(),
+        },
       ],
     ],
     [KeyboardVariant.ShiftNumber]: [
@@ -299,7 +314,12 @@ export const VirtualKeyboard = () => {
           value: "",
           onClick: () => dispatch({ type: "SWITCH_LANGUAGE", language: Language.English }),
         },
-        { char: <DeleteIcon className="size-[18px] stroke-[1.5]" />, value: "", minWidth: "140px" },
+        {
+          char: <DeleteIcon className="size-[18px] stroke-[1.5]" />,
+          value: "",
+          minWidth: "140px",
+          onClick: () => virtualKeyboard.backspace(),
+        },
       ],
     ],
   };
