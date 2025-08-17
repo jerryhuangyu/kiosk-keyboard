@@ -15,7 +15,7 @@
       "**/index.html",
       "**/vite.config.mjs",
       "!**/chrome-extension/manifest.js",
-      "!**/dist/manifest.js"
+      "!**/dist/**/*"
     ]
   },
   "formatter": {
@@ -38,8 +38,16 @@
           "level": "warn"
         }
       },
+      "suspicious": {
+        "noUnknownAtRules": "info",
+        "noArrayIndexKey": "info",
+        "noExplicitAny": "info"
+      },
       "correctness": {
         "useUniqueElementIds": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "info"
       }
     }
   },

@@ -1,4 +1,4 @@
-import { virtualKeyboardStorage } from '@extension/storage';
+import { virtualKeyboardStorage } from "@extension/storage";
 
 class VirtualKeyboard {
   public async focusInput(element: HTMLInputElement | HTMLTextAreaElement) {
@@ -22,7 +22,7 @@ class VirtualKeyboard {
     }
 
     if (!element) {
-      console.warn('No active element to type into');
+      console.warn("No active element to type into");
       return;
     }
 
@@ -38,24 +38,24 @@ class VirtualKeyboard {
     element.focus(); // This is necessary because setSelectionRange only works on focused elements
     const originalType = element.type;
     if (!(element instanceof HTMLTextAreaElement)) {
-      element.type = 'text';
+      element.type = "text";
     }
     element?.setSelectionRange(newCursorPos, newCursorPos);
     if (!(element instanceof HTMLTextAreaElement)) {
       element.type = originalType;
     }
 
-    console.debug('Dispatching input events');
+    console.debug("Dispatching input events");
     console.debug(`Current value: "${value}"`);
     console.debug(`Current cursor position: start=${start}, end=${end}`);
     console.debug(`Selected text: "${value.slice(start, end)}"`);
     console.debug(`New value: "${newValue}"`);
     console.debug(`New cursor position: start=${newCursorPos}, end=${newCursorPos}`);
 
-    const inputEvent = new InputEvent('input', {
+    const inputEvent = new InputEvent("input", {
       bubbles: true,
       cancelable: true,
-      inputType: 'insertText',
+      inputType: "insertText",
       data: char,
     });
     element.dispatchEvent(inputEvent);
@@ -95,37 +95,37 @@ class VirtualKeyboard {
   //     }
   // }
 
-  private dispatchInputEvents(element: HTMLInputElement | HTMLTextAreaElement, data: string) {
-    // Dispatch input event (modern standard)
-    const inputEvent = new InputEvent('input', {
-      bubbles: true,
-      cancelable: true,
-      inputType: data ? 'insertText' : 'deleteContentBackward',
-      data: data || null,
-    });
-    element.dispatchEvent(inputEvent);
+  // private dispatchInputEvents(element: HTMLInputElement | HTMLTextAreaElement, data: string) {
+  //   // Dispatch input event (modern standard)
+  //   const inputEvent = new InputEvent("input", {
+  //     bubbles: true,
+  //     cancelable: true,
+  //     inputType: data ? "insertText" : "deleteContentBackward",
+  //     data: data || null,
+  //   });
+  //   element.dispatchEvent(inputEvent);
 
-    // Dispatch change event
-    const changeEvent = new Event('change', {
-      bubbles: true,
-      cancelable: true,
-    });
-    element.dispatchEvent(changeEvent);
+  //   // Dispatch change event
+  //   const changeEvent = new Event("change", {
+  //     bubbles: true,
+  //     cancelable: true,
+  //   });
+  //   element.dispatchEvent(changeEvent);
 
-    // For compatibility with older frameworks
-    const keyboardEvent = new KeyboardEvent('keyup', {
-      bubbles: true,
-      cancelable: true,
-      key: data || 'Backspace',
-    });
-    element.dispatchEvent(keyboardEvent);
+  //   // For compatibility with older frameworks
+  //   const keyboardEvent = new KeyboardEvent("keyup", {
+  //     bubbles: true,
+  //     cancelable: true,
+  //     key: data || "Backspace",
+  //   });
+  //   element.dispatchEvent(keyboardEvent);
 
-    console.log('Input events dispatched for:', data || 'backspace');
-  }
+  //   console.log("Input events dispatched for:", data || "backspace");
+  // }
 
   public async isActive(): Promise<boolean> {
     const state = await virtualKeyboardStorage.get();
-    console.log('Checking if virtual keyboard is active', state);
+    console.log("Checking if virtual keyboard is active", state);
     return state.isActive;
   }
 }

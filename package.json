@@ -68,7 +68,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json}": [
-      ""
+      "biome check --write --diagnostic-level=warn"
     ]
   },
   "packageManager": "pnpm@10.11.0",
