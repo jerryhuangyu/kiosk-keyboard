@@ -1,7 +1,7 @@
 import { useStorage, virtualKeyboard } from "@extension/shared";
 import { virtualKeyboardStorage } from "@extension/storage";
 import { ArrowBigUpDashIcon, ArrowBigUpIcon, ChevronDownIcon, DeleteIcon, GlobeIcon } from "lucide-react";
-import { type ReactNode, useReducer } from "react";
+import { type ReactNode, useReducer, useRef } from "react";
 
 export enum Language {
   English = "english",
@@ -59,11 +59,29 @@ type Key = {
 };
 
 export const VirtualKeyboard = () => {
+  const shiftClickTimer = useRef<NodeJS.Timeout | null>(null);
+
   const { isActive } = useStorage(virtualKeyboardStorage);
   const [keyboardState, dispatch] = useReducer(keyboardReducer, {
     language: Language.English,
     permanentShift: false,
   });
+
+  const handleShiftClick = () => {
+    if (shiftClickTimer.current) clearTimeout(shiftClickTimer.current);
+    shiftClickTimer.current = setTimeout(() => {
+      if (keyboardState.permanentShift) {
+        dispatch({ type: "TOGGLE_PERMANENT_SHIFT" });
+        return;
+      }
+      dispatch({ type: "TOGGLE_TEMP_SHIFT" });
+    }, 200);
+  };
+
+  const handleShiftDoubleClick = () => {
+    if (shiftClickTimer.current) clearTimeout(shiftClickTimer.current);
+    dispatch({ type: "TOGGLE_PERMANENT_SHIFT" });
+  };
 
   if (!isActive) return;
 
@@ -123,14 +141,8 @@ export const VirtualKeyboard = () => {
           ),
           value: "",
           minWidth: "120px",
-          onClick: () => {
-            if (keyboardState.permanentShift) {
-              dispatch({ type: "TOGGLE_PERMANENT_SHIFT" });
-              return;
-            }
-            dispatch({ type: "TOGGLE_TEMP_SHIFT" });
-          },
-          onDblClick: () => dispatch({ type: "TOGGLE_PERMANENT_SHIFT" }),
+          onClick: handleShiftClick,
+          onDblClick: handleShiftDoubleClick,
         },
       ],
       [
@@ -204,14 +216,8 @@ export const VirtualKeyboard = () => {
           ),
           value: "",
           minWidth: "120px",
-          onClick: () => {
-            if (keyboardState.permanentShift) {
-              dispatch({ type: "TOGGLE_PERMANENT_SHIFT" });
-              return;
-            }
-            dispatch({ type: "TOGGLE_TEMP_SHIFT" });
-          },
-          onDblClick: () => dispatch({ type: "TOGGLE_PERMANENT_SHIFT" }),
+          onClick: handleShiftClick,
+          onDblClick: handleShiftDoubleClick,
         },
       ],
       [
@@ -250,14 +256,8 @@ export const VirtualKeyboard = () => {
         {
           char: "Shift",
           value: "",
-          onClick: () => {
-            if (keyboardState.permanentShift) {
-              dispatch({ type: "TOGGLE_PERMANENT_SHIFT" });
-              return;
-            }
-            dispatch({ type: "TOGGLE_TEMP_SHIFT" });
-          },
-          onDblClick: () => dispatch({ type: "TOGGLE_PERMANENT_SHIFT" }),
+          onClick: handleShiftClick,
+          onDblClick: handleShiftDoubleClick,
         },
         { char: "0", value: "0" },
         { char: "-", value: "-" },
@@ -296,14 +296,8 @@ export const VirtualKeyboard = () => {
         {
           char: "Shift",
           value: "",
-          onClick: () => {
-            if (keyboardState.permanentShift) {
-              dispatch({ type: "TOGGLE_PERMANENT_SHIFT" });
-              return;
-            }
-            dispatch({ type: "TOGGLE_TEMP_SHIFT" });
-          },
-          onDblClick: () => dispatch({ type: "TOGGLE_PERMANENT_SHIFT" }),
+          onClick: handleShiftClick,
+          onDblClick: handleShiftDoubleClick,
         },
         { char: ")", value: ")" },
         { char: "+", value: "+" },
@@ -350,7 +344,7 @@ export const VirtualKeyboard = () => {
           <div key={layoutKey + rowIndex} className="flex flex-row flex-nowrap gap-2">
             {row.map((key) => (
               <KeyButton
-                key={key.char?.toString()}
+                key={crypto.randomUUID()}
                 label={key.char}
                 minWidth={key.minWidth}
                 onClick={async () => {
